@@ -1,0 +1,5 @@
+name: ${project.artifactId}
+description: Natural Disasters for 1.13+
+version: ${project.version}
+api-version: 1.13
+main: ${project.groupId}.naturaldisasters.NaturalDisasters
