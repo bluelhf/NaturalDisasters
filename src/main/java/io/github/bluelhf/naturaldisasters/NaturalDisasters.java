@@ -2,6 +2,7 @@ package io.github.bluelhf.naturaldisasters;
 
 import com.moderocky.mask.template.BukkitPlugin;
 import io.github.bluelhf.naturaldisasters.command.NaturalDisastersCommand;
+import io.github.bluelhf.naturaldisasters.disaster.EarthquakeDisaster;
 import io.github.bluelhf.naturaldisasters.disaster.MeteoriteDisaster;
 import io.github.bluelhf.naturaldisasters.disaster.NaturalDisaster;
 import io.github.bluelhf.naturaldisasters.disaster.SinkholeDisaster;
@@ -18,12 +19,16 @@ public class NaturalDisasters extends BukkitPlugin {
     @Override
     public void startup() {
         instance = this;
-
-        register(new NaturalDisastersCommand());
         try {
             registerDisaster(new MeteoriteDisaster());
             registerDisaster(new SinkholeDisaster());
+            registerDisaster(new EarthquakeDisaster());
         } catch (DuplicateDisasterException ignored) { /* We can ignore this since we ensured everything is unregistered on disable */ }
+    }
+
+    @Override
+    protected void registerCommands() {
+        register(new NaturalDisastersCommand());
     }
 
     @Override

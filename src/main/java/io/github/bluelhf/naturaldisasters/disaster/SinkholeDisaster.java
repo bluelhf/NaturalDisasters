@@ -2,7 +2,6 @@ package io.github.bluelhf.naturaldisasters.disaster;
 
 import com.google.common.collect.Lists;
 import com.google.common.primitives.UnsignedLong;
-import com.moderocky.mask.template.Reflective;
 import io.github.bluelhf.naturaldisasters.NaturalDisasters;
 import io.github.bluelhf.naturaldisasters.util.BlockUtils;
 import io.github.bluelhf.naturaldisasters.util.NMSUtils;

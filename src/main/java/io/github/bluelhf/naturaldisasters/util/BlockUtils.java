@@ -3,7 +3,12 @@ package io.github.bluelhf.naturaldisasters.util;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.command.BlockCommandSender;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,7 @@ public class BlockUtils {
         }}
         return circleBlocks;
     }
+
     public static List<Location> generateSphere(Location centerBlock, int radius) {
         if (centerBlock == null) {
             return new ArrayList<>();
@@ -48,6 +54,12 @@ public class BlockUtils {
         return circleBlocks;
     }
 
+    public static @Nullable Location senderLocation(CommandSender sender) {
+        if (sender instanceof Player) return ((Player)sender).getLocation();
+        if (sender instanceof BlockCommandSender) return ((BlockCommandSender)sender).getBlock().getLocation();
+        return null;
+    }
+
     public static Location randomLocation(World w) {
         Random r = new Random();
         Chunk[] chunks = w.getLoadedChunks();
@@ -62,10 +74,12 @@ public class BlockUtils {
         return randomLocation(rWorld);
     }
 
-    public static void fall(Block b) {
-        if (b.getType() == Material.AIR) return;
+    public static @Nullable org.bukkit.entity.FallingBlock fall(Block b) {
+        if (b.getType() == Material.AIR) return null;
         BlockData bd = b.getBlockData().clone();
         b.setType(Material.AIR);
-        b.getWorld().spawnFallingBlock(b.getLocation(), bd).setDropItem(false);
+        FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), bd);
+        fb.setDropItem(false);
+        return fb;
     }
 }
